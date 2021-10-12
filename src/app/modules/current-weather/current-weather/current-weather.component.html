@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="card">
+    <h2>Enter a zipcode (FR):</h2>
+    <form (ngSubmit)="submit()">
+      <input
+        class="form-control"
+        placeholder="Zipcode"
+        type="text"
+        id="addLocation"
+        [formControl]="zipCode"
+      />
+      <br />
+      <button
+        class="btn btn-primary align-self-start"
+        id="addLocationBtn"
+        type="submit"
+        [disabled]="!zipCode.valid"
+      >
+        Add location
+      </button>
+    </form>
+  </div>
+  <div class="d-flex flex-column">
+    <app-current-weather-list-item
+      *ngFor="let currentWeather of currentWeatherList; index as i"
+      [weatherInfo]="currentWeather"
+      >test</app-current-weather-list-item
+    >
+  </div>
+</div>
