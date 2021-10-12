@@ -9,11 +9,12 @@ import { WeatherInfo } from '../models/weather-info';
 })
 export class WeatherService {
   currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast';
   apiKey = '5a4b2d457ecbef9eb2a71e480b947604';
 
   constructor(private http: HttpClient) {}
 
-  getCurrentWeatherAllLocations(): Observable<any> {
+  getCurrentWeatherAllLocations(): Observable<WeatherInfo[]> {
     let zipCodesArray: string[] = [];
     let requestArray: Observable<any>[] = [];
     let resultsObs: Observable<WeatherInfo[]>;
@@ -59,5 +60,11 @@ export class WeatherService {
     localStorage.setItem('zipCodes', JSON.stringify(zipCodesArray));
 
     return this.getCurrentWeather(zipCode);
+  }
+
+  getForecastByZipCode(zipCode: string) {
+    return this.http.get(
+      `${this.forecastUrl}?zip=${zipCode},fr&appid=${this.apiKey}`
+    );
   }
 }
