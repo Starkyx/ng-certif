@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WeatherInfo } from 'src/app/core/models/weather-info';
 
 @Component({
@@ -8,8 +8,13 @@ import { WeatherInfo } from 'src/app/core/models/weather-info';
 })
 export class CurrentWeatherListItemComponent implements OnInit {
   @Input() weatherInfo!: WeatherInfo;
+  @Output() deleteEvent = new EventEmitter<string>();
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  onClickDelete(zipCode: string): void {
+    this.deleteEvent.emit(zipCode);
+  }
 }

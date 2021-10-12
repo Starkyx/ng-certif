@@ -24,6 +24,7 @@
     <app-current-weather-list-item
       *ngFor="let currentWeather of currentWeatherList; index as i"
       [weatherInfo]="currentWeather"
+      (deleteEvent)="deleteItem($event)"
       >test</app-current-weather-list-item
     >
   </div>

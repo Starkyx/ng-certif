@@ -30,6 +30,6 @@
       *ngIf="weatherInfo.currentConditions === 'Snow'"
       src="https://www.angulartraining.com/images/weather/snow.png"
     />
-    <span class="close">×</span>
+    <span class="close" (click)="onClickDelete(weatherInfo.zipCode)">×</span>
   </div>
 </div>

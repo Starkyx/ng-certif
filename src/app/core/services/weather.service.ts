@@ -16,7 +16,7 @@ export class WeatherService {
   getCurrentWeatherAllLocations(): Observable<any> {
     let zipCodesArray: string[] = [];
     let requestArray: Observable<any>[] = [];
-    let resultsObs: Observable<any>;
+    let resultsObs: Observable<WeatherInfo[]>;
 
     if (localStorage.getItem('zipCodes')) {
       zipCodesArray = JSON.parse(localStorage.getItem('zipCodes')!);
@@ -25,32 +25,30 @@ export class WeatherService {
       });
     }
 
-    resultsObs = forkJoin(requestArray).pipe(
-      map((items) =>
-        items.map(
-          (item, index) =>
+    resultsObs = forkJoin(requestArray);
+
+    return resultsObs;
+  }
+
+  getCurrentWeather(zipCode: string): Observable<WeatherInfo> {
+    return this.http
+      .get(`${this.currentWeatherUrl}?zip=${zipCode},fr&appid=${this.apiKey}`)
+      .pipe(
+        map(
+          (item: any) =>
             ({
               cityName: item.name,
-              zipCode: zipCodesArray[index],
+              zipCode: zipCode,
               currentConditions: item.weather[0].main,
               currentTemp: item.main.temp,
               maxTemp: item.main.temp_max,
               minTemp: item.main.temp_min,
             } as WeatherInfo)
         )
-      )
-    );
-
-    return resultsObs;
+      );
   }
 
-  getCurrentWeather(zipCode: string) {
-    return this.http.get(
-      `${this.currentWeatherUrl}?zip=${zipCode},fr&appid=${this.apiKey}`
-    );
-  }
-
-  saveZipCode(zipCode: string) {
+  saveZipCode(zipCode: string): Observable<WeatherInfo> {
     let zipCodesArray: string[] = [];
 
     if (localStorage.getItem('zipCodes')) {
@@ -59,5 +57,7 @@ export class WeatherService {
 
     zipCodesArray.push(zipCode);
     localStorage.setItem('zipCodes', JSON.stringify(zipCodesArray));
+
+    return this.getCurrentWeather(zipCode);
   }
 }

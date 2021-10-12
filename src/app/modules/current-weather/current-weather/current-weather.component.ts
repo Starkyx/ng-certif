@@ -26,8 +26,25 @@ export class CurrentWeatherComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.zipCode.value);
-    this.weatherService.saveZipCode(this.zipCode.value);
+    const isNewZipCode: boolean =
+      this.currentWeatherList.findIndex(
+        (weatherInfo) => weatherInfo.zipCode === this.zipCode.value
+      ) === -1;
+
+    if (isNewZipCode) {
+      this.weatherService
+        .saveZipCode(this.zipCode.value)
+        .subscribe((weatherInfo) => {
+          this.currentWeatherList.push(weatherInfo);
+        });
+    }
+
     this.zipCode.setValue('');
+  }
+
+  deleteItem(zipCode: string) {
+    this.currentWeatherList = this.currentWeatherList.filter(
+      (item: WeatherInfo) => item.zipCode !== zipCode
+    );
   }
 }
