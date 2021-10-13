@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { WeatherInfo } from '../models/weather-info';
 import { ForecastInfo } from '../models/forecast-info';
 import { environment } from 'src/environments/environment';
