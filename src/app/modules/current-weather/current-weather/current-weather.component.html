@@ -22,7 +22,7 @@
   </div>
   <div class="d-flex flex-column">
     <app-current-weather-list-item
-      *ngFor="let currentWeather of currentWeatherList; index as i"
+      *ngFor="let currentWeather of currentWeatherList"
       [weatherInfo]="currentWeather"
       (deleteEvent)="deleteItem($event)"
       >test</app-current-weather-list-item

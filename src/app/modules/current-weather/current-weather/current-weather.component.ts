@@ -46,5 +46,6 @@ export class CurrentWeatherComponent implements OnInit {
     this.currentWeatherList = this.currentWeatherList.filter(
       (item: WeatherInfo) => item.zipCode !== zipCode
     );
+    this.weatherService.deleteZipCode(zipCode);
   }
 }

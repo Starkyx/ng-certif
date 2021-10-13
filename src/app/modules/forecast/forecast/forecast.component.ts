@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ForecastInfo } from 'src/app/core/models/forecast-info';
 
 @Component({
   selector: 'app-forecast',
@@ -7,14 +8,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./forecast.component.css'],
 })
 export class ForecastComponent implements OnInit {
-  forecast: any;
+  forecastWeatherList: ForecastInfo[] = [];
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
-      this.forecast = data['forecast'];
-      console.log(this.forecast);
+      this.forecastWeatherList = data['forecast'];
     });
   }
 }

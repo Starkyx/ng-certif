@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { CurrentWeatherListItemComponent } from './components/current-weather-list-item/current-weather-list-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForecastWeatherListItemComponent } from './components/forecast-weather-list-item/forecast-weather-list-item.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     CurrentWeatherListItemComponent,
     ForecastWeatherListItemComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   exports: [
     FormsModule,
     ReactiveFormsModule,

@@ -4,11 +4,12 @@
     <h4>Current conditions: {{ weatherInfo.currentConditions }}</h4>
     <h4>Temperatures today:</h4>
     <p>
-      Current {{ weatherInfo.currentTemp }} - Max {{ weatherInfo.maxTemp }} -
-      Min {{ weatherInfo.minTemp }}
+      Current {{ weatherInfo.currentTemp | number: "1.0-0" }} - Max
+      {{ weatherInfo.maxTemp | number: "1.0-0" }} - Min
+      {{ weatherInfo.minTemp | number: "1.0-0" }}
     </p>
     <p>
-      <a href="/forecast/95742"
+      <a [routerLink]="['/forecast', weatherInfo.zipCode]"
         >Show 5-day forecast for {{ weatherInfo.cityName }}</a
       >
     </p>
