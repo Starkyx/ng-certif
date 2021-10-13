@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { initializeApp } from 'firebase/app';
+import { BehaviorSubject } from 'rxjs';
+import { LoaderService } from './core/services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,9 @@ import { initializeApp } from 'firebase/app';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor() {
+  isLoading: BehaviorSubject<boolean> = this.loaderService.isLoading;
+
+  constructor(private loaderService: LoaderService) {
     const firebaseConfig = {
       apiKey: 'AIzaSyD3-13wxyUW73M0Wb7M26KiiwYrBwAnvCY',
       authDomain: 'ng-certif.firebaseapp.com',
