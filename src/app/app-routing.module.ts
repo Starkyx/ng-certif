@@ -10,11 +10,16 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'forecast',
+    path: 'forecast/:zipCode',
     loadChildren: () =>
       import(`./modules/forecast/forecast.module`).then(
         (m) => m.ForecastModule
       ),
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: '',
   },
 ];
 

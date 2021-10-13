@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { WeatherInfo } from 'src/app/core/models/weather-info';
 import { WeatherService } from 'src/app/core/services/weather.service';
+import { capitalize } from 'src/app/core/utils/utils';
 
 @Component({
   selector: 'app-current-weather',
@@ -15,14 +17,20 @@ export class CurrentWeatherComponent implements OnInit {
   ]);
   currentWeatherList: WeatherInfo[] = [];
 
-  constructor(private weatherService: WeatherService) {}
+  constructor(
+    private weatherService: WeatherService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.weatherService
-      .getCurrentWeatherAllLocations()
-      .subscribe((currentWeatherList) => {
+    this.weatherService.getCurrentWeatherAllLocations().subscribe(
+      (currentWeatherList) => {
         this.currentWeatherList = currentWeatherList;
-      });
+      },
+      (error) => {
+        this.toastr.success(error.error.message, 'Error');
+      }
+    );
   }
 
   submit(): void {
@@ -32,20 +40,23 @@ export class CurrentWeatherComponent implements OnInit {
       ) === -1;
 
     if (isNewZipCode) {
-      this.weatherService
-        .saveZipCode(this.zipCode.value)
-        .subscribe((weatherInfo) => {
+      this.weatherService.saveZipCode(this.zipCode.value).subscribe(
+        (weatherInfo) => {
           this.currentWeatherList.push(weatherInfo);
-        });
+        },
+        (error) => {
+          this.toastr.error(capitalize(error.error.message), 'Error');
+        }
+      );
     }
 
     this.zipCode.setValue('');
   }
 
   deleteItem(zipCode: string) {
+    this.weatherService.deleteZipCode(zipCode);
     this.currentWeatherList = this.currentWeatherList.filter(
       (item: WeatherInfo) => item.zipCode !== zipCode
     );
-    this.weatherService.deleteZipCode(zipCode);
   }
 }

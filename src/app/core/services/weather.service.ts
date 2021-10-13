@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { WeatherInfo } from '../models/weather-info';
 import { ForecastInfo } from '../models/forecast-info';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherService {
-  currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
-  forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast/daily';
-  apiKey = '5a4b2d457ecbef9eb2a71e480b947604';
-
   constructor(private http: HttpClient) {}
 
   getCurrentWeatherAllLocations(): Observable<WeatherInfo[]> {
@@ -35,7 +32,7 @@ export class WeatherService {
   getCurrentWeatherByZipCode(zipCode: string): Observable<WeatherInfo> {
     return this.http
       .get(
-        `${this.currentWeatherUrl}?zip=${zipCode},fr&units=metric&appid=${this.apiKey}`
+        `${environment.currentWeatherUrl}?zip=${zipCode},fr&units=metric&appid=${environment.weatherApiKey}`
       )
       .pipe(
         map(
@@ -79,7 +76,7 @@ export class WeatherService {
   getForecastByZipCode(zipCode: string): Observable<ForecastInfo> {
     return this.http
       .get(
-        `${this.forecastUrl}?zip=${zipCode},fr&units=metric&cnt=5&appid=${this.apiKey}`
+        `${environment.forecastUrl}?zip=${zipCode},fr&units=metric&cnt=5&appid=${environment.weatherApiKey}`
       )
       .pipe(
         map((result: any) => {

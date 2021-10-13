@@ -5,7 +5,7 @@ import { ForecastComponent } from './forecast/forecast.component';
 
 const routes: Routes = [
   {
-    path: ':zipCode',
+    path: '',
     component: ForecastComponent,
     resolve: {
       forecast: ForecastResolver,
