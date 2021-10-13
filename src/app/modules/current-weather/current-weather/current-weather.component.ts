@@ -28,7 +28,7 @@ export class CurrentWeatherComponent implements OnInit {
         this.currentWeatherList = currentWeatherList;
       },
       (error) => {
-        this.toastr.success(error.error.message, 'Error');
+        this.toastr.error(capitalize(error.error.message), 'Error');
       }
     );
   }
